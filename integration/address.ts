@@ -1,0 +1,9 @@
+const DAOGovernance = "0x811eD501c23D82aC4EB72ee9f211B3AA4b778f35"
+const DAOMembership = "0xE19e186742B601c05401eE9F906051798805B9c4"
+const DAOTokenDistribution = "0xF50B690CfA53965aD4537d1fb6C56dAF9B35Eeb7"
+const DAOToken = "0x7F7ff3D1b593EE95367F5A6397622a7c2497B2C3"
+const DAOTreasury = "0x00AEB9820B4AE214Ae9238B6bdcbD5B9a89B6e86"
+const DAOVoting = "0xDA3A150ABe7AC8B63a1EE8e241Af9D2adD240eaf"
+
+
+export{ DAOGovernance, DAOMembership, DAOTokenDistribution, DAOToken, DAOTreasury, DAOVoting}

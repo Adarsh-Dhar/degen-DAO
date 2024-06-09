@@ -1,33 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getDAOGovernanceContract } from '@/integration/connection';
+import Button from './Button';
+
 
 const ProposalList = () => {
-  const proposals = [
-    { id: 1, title: 'Proposal 1', description: 'Description 1', fundRequest: 10 },
-    { id: 2, title: 'Proposal 2', description: 'Description 2', fundRequest: 20 }
-  ];
+  
 
-  useEffect(() => {
-    console.log('Active Proposals:', proposals);
-  }, []);
+  const getAllPitch = async () => {
+    try {
+      const contract = await getDAOGovernanceContract();
+      if(contract){
+        //@ts-ignore
+        if(typeof contract.getProposal === 'function'){
+         let response = await contract.getProposal("0xf76daC24BaEf645ee0b3dfAc1997c6b838eF280D");
+          // response = JSON.parse(JSON.stringify(response))
+          // console.log('All Proposals:', response);
+          const proposalArray = await Promise.all(response.map(async (proposal : any) => {
+            const values = await Promise.all(proposal.map(async (value : any) => {
+                return value;
+            }));
+            return values;
+        }));
 
-const handleVote = (id: number, vote: boolean): void => {
-    console.log(`Voted ${vote ? 'For' : 'Against'} Proposal ${id}`);
-};
+        console.log('All Proposals:', proposalArray);
+        return proposalArray;
 
-  return (
-    <div>
-      <h2>Active Proposals</h2>
-      {proposals.map((proposal) => (
-        <div key={proposal.id}>
-          <h3>{proposal.title}</h3>
-          <p>{proposal.description}</p>
-          <p>Fund Request: {proposal.fundRequest} ETH</p>
-          <button onClick={() => handleVote(proposal.id, true)}>Vote For</button>
-          <button onClick={() => handleVote(proposal.id, false)}>Vote Against</button>
-        </div>
-      ))}
-    </div>
-  );
+        }else{
+          console.error('getAllProposals is not a function on the contract');
+        }
+      }else{
+        console.error('Contract not initialized');
+      }
+  }catch(error){
+    console.error('Error fetching all proposals:', error);
+  
+  };
+}
+
+  return(<div>
+    <Button onClick={getAllPitch} text='All Pitch' />
+  </div>)
 };
 
 export default ProposalList;

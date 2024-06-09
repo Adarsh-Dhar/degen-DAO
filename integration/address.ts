@@ -1,9 +1,9 @@
-const DAOGovernance = "0x811eD501c23D82aC4EB72ee9f211B3AA4b778f35"
-const DAOMembership = "0xE19e186742B601c05401eE9F906051798805B9c4"
-const DAOTokenDistribution = "0xF50B690CfA53965aD4537d1fb6C56dAF9B35Eeb7"
-const DAOToken = "0x7F7ff3D1b593EE95367F5A6397622a7c2497B2C3"
-const DAOTreasury = "0x00AEB9820B4AE214Ae9238B6bdcbD5B9a89B6e86"
-const DAOVoting = "0xDA3A150ABe7AC8B63a1EE8e241Af9D2adD240eaf"
+const DAOGovernanceAddress = "0x95749350A6245F3385e195a20824c60C5F6c542D"
+const DAOMembershipAddress = "0xc4DBde7DCD5980940e9B4f55e02ffD8fE0b466Ac"
+const DAOTokenDistributionAddress = "0xCfAe507cb822e62abec3E83DbC70aB41A868371f"
+const DAOTokenAddress = "0x6914230D6f4b2B96B2697b5bbdaA8a348a1FF483"
+const DAOTreasuryAddress = "0x95A181d4FD536d7FE0C0369fEB7F6C47C5E0Ee42"
+const DAOVotingAddress = "0x22098CdDc00A326732f95d964c6be051143D3622"
 
 
-export{ DAOGovernance, DAOMembership, DAOTokenDistribution, DAOToken, DAOTreasury, DAOVoting}
+export{ DAOGovernanceAddress, DAOMembershipAddress, DAOTokenDistributionAddress, DAOTokenAddress, DAOTreasuryAddress, DAOVotingAddress}

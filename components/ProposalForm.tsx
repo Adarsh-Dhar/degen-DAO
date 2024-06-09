@@ -1,27 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Button from './Button';
+import { setDAOGovernanceContract } from '@/integration/connection';
+import Textarea from './Textarea';
+import { use } from 'chai';
 
-const ProposalForm = () => {
+export default function ProposalForm(){
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fundRequest, setFundRequest] = useState(0);
 
-  const handleSubmit = (e : any) => {
-    e.preventDefault();
-    console.log('Proposal Submitted:', { title, description, fundRequest });
+ 
+
+  const SubmitPitch = async () => {
+    try {
+     const contract = await setDAOGovernanceContract();
+     if(contract){
+        //@ts-ignore
+        if(typeof contract.createProposals === 'function'){
+          const response = await contract.createProposals(title, description, fundRequest);
+        
+          console.log('Create Proposal:', response);
+        }else{
+          console.error('createProposals is not a function on the contract');
+        }
+       
+     }else {
+        console.error('Contract not initialized');
+     }
+  }catch(error){
+    console.error('Error submitting pitch:', error);
+  
   };
+}
+
+useEffect(() => {
+  SubmitPitch()
+},[title, description, fundRequest]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create New Proposal</h2>
-      <label>Title:</label>
-      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-      <label>Description:</label>
-      <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-      <label>Fund Request (ETH):</label>
-      <input type="number" value={fundRequest} onChange={(e) => setFundRequest(Number(e.target.value))} required />
-      <button type="submit">Submit Proposal</button>
-    </form>
+    <div>
+      <Textarea
+        placeholder='Title'
+        message='What is the name of your pitch?'
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <Textarea
+        placeholder='Description'
+        message='Give a description about your pitch'
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <input
+        className='text-black'
+        type="number"
+        value={fundRequest}
+        onChange={(e) => setFundRequest(Number(e.target.value))}
+      />
+      <Button onClick={SubmitPitch} text='Submit Pitch' />
+
+    </div>
   );
 };
 
-export default ProposalForm;
+
+

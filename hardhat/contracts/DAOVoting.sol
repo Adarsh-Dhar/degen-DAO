@@ -3,15 +3,19 @@ pragma solidity ^0.8.0;
 
 contract DAOVoting {
     struct Vote {
-        uint proposalId;
+        string title;
+        string description;
+        uint fund;
         bool inSupport;
     }
 
     mapping(address => Vote) public votes;
 
-    function castVote(uint _proposalId, bool _inSupport) public {
+    function castVote(string memory _title, string memory _description ,uint _fund, bool _inSupport) public {
         votes[msg.sender] = Vote({
-            proposalId: _proposalId,
+            title : _title,
+            description : _description,
+            fund: _fund,
             inSupport: _inSupport
         });
     }
